@@ -18,16 +18,26 @@ class Dao
         }
     }
 
-    public function Insert($a, $b, $c, $e, $f)
+    public function Insert(Checklist $checklist)
     {
+ 
         try {
             $conexao = new Connect();
-            $consulta = $conexao->Conectando()->prepare(
-                
-            "INSERT INTO cl_response (ID_option, descr, photo, dataa, TYPEE, USERR) 
-            VALUES ('$a', '$b', '$c', CURDATE(), '$e', '$f')"
-            );
+            $a = $checklist->getId();
+            $b = $checklist->getUser();
+            $c = $checklist->getDescription();
+            $d = $checklist->getType();
+
+            $consulta = $conexao->Conectando()->prepare('INSERT INTO cl_response (id_option, user, descricao,  type)  VALUES (:id, :user, :description,:type)');
+            $consulta->bindValue(':id', $a,);
+            $consulta->bindValue(':user',$b, );
+            $consulta->bindValue(':description',$c, );
+            $consulta->bindValue(':type',$d, ); 
+            
+          
+            var_dump($consulta);
             return $consulta->execute();
+
         } catch (PDOException $erro) {
             return $erro;
         }
