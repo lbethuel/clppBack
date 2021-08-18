@@ -20,25 +20,62 @@ if ($metodo === 'POST') {
     $jsonBody = json_decode($body, true);
     
     if (
-        isset($jsonBody['ID_option']) && $jsonBody['ID_option'] != NULL &&
-        isset($jsonBody['descr']) && $jsonBody['descr'] != NULL &&
-        isset($jsonBody['TYPEE']) && $jsonBody['TYPEE'] != NULL &&
-        isset($jsonBody['USERR']) && $jsonBody['USERR'] != NULL
+        isset($jsonBody['id_option']) && $jsonBody['id_option'] != NULL &&
+        isset($jsonBody['type']) && $jsonBody['type'] != NULL &&
+        isset($jsonBody['user']) && $jsonBody['user'] != NULL
         ) {
             // echo json_encode(array("error" => true, "message" => "(notification) is broken"));
             // http_response_code(400);
             // return;
 
+            $photo= NULL;
+            $description = NULL;
+
+
+            if(isset($jsonBody['photo'])){
+                $photo= $jsonBody['id_option'].'_photo';
+            }
+
+
+            if(isset($jsonBody['description'])){
+                $description= $jsonBody['description'];
+            }
+
+           
+
         $resposta = new Checklist(
-            $jsonBody['ID_option'],
-            $jsonBody['descr'],
+            $jsonBody['id_option'],
+            $description,
             NULL,
-            $jsonBody['TYPEE'],
-            $jsonBody['USERR']
+            $jsonBody['type'],
+            $jsonBody['user'],
+            $photo
         );
 
-        echo json_encode($dao->Insert($resposta));
+       echo json_encode($dao->Insert($resposta));
+        
+
+       if(isset($jsonBody['photo'])){
+        
+
+        $fileinfo = finfo_open();
+        $mime_type = finfo_buffer($fileinfo, base64_decode($jsonBody['photo']), FILEINFO_MIME_TYPE);
+   
+         $file_name = $jsonBody['id_option'].'_photo';
+         $fileInfo = explode("/", $mime_type);
+         $path = "uploads/" . $file_name . "." . $fileInfo[1];
+         $status = file_put_contents($path, base64_decode($jsonBody['photo']));
+     
+         if (!$status) {
+             echo "Upload failed";
+         }
+    }
+      
+
+
         return;
+
+
     }
 
 

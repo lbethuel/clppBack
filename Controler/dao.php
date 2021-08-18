@@ -18,6 +18,7 @@ class Dao
         }
     }
 
+
     public function Insert(Checklist $checklist)
     {
  
@@ -27,15 +28,16 @@ class Dao
             $b = $checklist->getUser();
             $c = $checklist->getDescription();
             $d = $checklist->getType();
+            $f = $checklist->getPhoto();
 
-            $consulta = $conexao->Conectando()->prepare('INSERT INTO cl_response (id_option, user, descricao,  type)  VALUES (:id, :user, :description,:type)');
+            $consulta = $conexao->Conectando()->prepare('INSERT INTO cl_response (id_option, user, descricao,  type, photo)  VALUES (:id, :user, :description,:type, :photo)');
             $consulta->bindValue(':id', $a,);
             $consulta->bindValue(':user',$b, );
             $consulta->bindValue(':description',$c, );
             $consulta->bindValue(':type',$d, ); 
+            $consulta->bindValue(':photo',$f, ); 
             
-          
-            var_dump($consulta);
+           
             return $consulta->execute();
 
         } catch (PDOException $erro) {

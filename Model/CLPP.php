@@ -7,13 +7,15 @@ function __construct(
     $description,
     $date,
     $type,
-    $user
+    $user,
+    $photo
   ){
     $this->id_option = (int)$id_option;
     $this->description = $description;
     $this->date = $date;
     $this->type = $type;
     $this->user = (int)$user;
+    $this->photo = $photo;
   }
 
 public function getId()
@@ -69,6 +71,17 @@ public function setId($id_option)
   public function setUser($user)
   {
     $this->user = $user;
+    return $this;
+  }
+
+  public function getPhoto()
+  {
+    return $this->photo;
+  }
+
+  public function setPhoto($photo)
+  {
+    $this->photo = $photo;
     return $this;
   }
 }
