@@ -1,7 +1,10 @@
 <?php
 
-require_once 'dao.php';
-require_once '../Model/CLPP.php';
+use Model\CLPP\Response;
+
+require('_autoloader.php');
+require('../../DAO/CLPP/Response.php');
+
 
 $metodo = $_SERVER['REQUEST_METHOD'];
 $dao = new Dao();
@@ -43,7 +46,7 @@ if ($metodo === 'POST') {
 
            
 
-        $resposta = new Checklist(
+        $resposta = new Response(
             $jsonBody['id_option'],
             $description,
             NULL,
@@ -91,8 +94,8 @@ if ($metodo === 'POST') {
 if ($metodo === 'PUT') {
     $a = json_decode($body, true);
 
-    $resposta = $dao->Update($a["ID_option"], $a["descr"], $a["photo"], $a["dataa"], $a["TYPEE"], $a["USERR"]);
-    var_dump($resposta);
+    $resposta = $dao->Update($a["Id_option"], $a["description"], $a["photo"], $a["data"], $a["type"], $a["user"], $a["id"]);
+    //var_dump($resposta);
 
     return;
 }

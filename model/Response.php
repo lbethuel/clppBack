@@ -1,6 +1,8 @@
 <?php
 
-class Checklist
+namespace Model\CLPP;
+
+class Response
 {
 function __construct(
     $id_option,
